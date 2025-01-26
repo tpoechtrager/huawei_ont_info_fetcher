@@ -20,6 +20,7 @@ function fetchWithRetry($fetchFunction) {
 
         // Infinite loop until successful login
         while (true) {
+            sleep(60);  // Wait for 60 seconds before retrying
             $ont_cookies = performLogin($username, $password);
             
             if ($ont_cookies) {
@@ -28,7 +29,6 @@ function fetchWithRetry($fetchFunction) {
             }
 
             echo "Re-login failed. Retrying...\n";
-            sleep(2);  // Wait for 2 seconds before retrying
         }
     }
 }
@@ -48,7 +48,7 @@ function fetchAllData() {
             }
 
             echo "Initial login failed. Retrying...\n";
-            sleep(2);
+            sleep(10);
         }
     }
 
@@ -66,6 +66,13 @@ function fetchAllData() {
     return $combinedData;
 }
 
-fetchAllData();
+if (!isset($DISABLE_EXAMPLE_USAGE)) {
+
+while (true) {
+    fetchAllData();
+    sleep(1);
+}
+
+}
 
 ?>
